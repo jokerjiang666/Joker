@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace  代表这个文件的id-->
+<mapper namespace="com.itheima.Dao.UserDao">
+    <!--增加-->
+    <insert id="save" parameterType="com.itheima.domain.User">
+        insert into user values (null,#{name},#{password},#{email},#{birthday});
+    </insert>
+    <!--修改-->
+    <update id="update" parameterType="com.itheima.domain.User">
+        update user set name = #{name} w      here uid = #{uid};
+    </update>
+    <!--删除-->
+    <delete id="delete" parameterType="com.itheima.domain.User">
+        DELETE from user where uid = #{uid};
+    </delete>
+    <!--查询-->
+    <select id="findAll" resultType="com.itheima.domain.User">
+        select * from user;
+    </select>
+    <!--AS查询-->
+    <resultMap id="userMap" type="com.itheima.domain.User">
+        <id column="id" property="uid"/>
+        <result column="username" property="name"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="birthday" property="birthday"/>
+    </resultMap>
+    <select id="findAllMap" resultMap="userMap">
+        select uid as id ,name as username from user;
+    </select>
+    <!--多条件查询-->
+    <select id="findAllTiaoJian" resultType="com.itheima.domain.User">
+        select * from user where name = #{name1} and email = #{email};
+    </select>
+    <!--多条件查询 对象方式-->
+    <select id="findAllTiaoJianDui" resultType="com.itheima.domain.User">
+        select * from user where name = #{name} and email = #{email};
+    </select>
+    <!--模糊查询-->
+    <select id="findAllLike" resultType="com.itheima.domain.User">
+        select * from user where name like "%"#{name}"%";
+    </select>
+    <!--模糊查询-->
+    <select id="findAllLikeCan" resultType="com.itheima.domain.User">
+        select * from user where name like #{name};
+    </select>
+</mapper>
